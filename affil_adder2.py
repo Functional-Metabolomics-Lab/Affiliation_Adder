@@ -31,6 +31,10 @@ def download_link(content, filename, text):
     b64 = base64.b64encode(buffer.read().encode()).decode()
     return f'<a href="data:application/octet-stream;base64,{b64}" download="{filename}">{text}</a>'
 
+def superscript_comma(content):
+    """Convert normal commas to pseudo-superscript using CSS."""
+    return content.replace('+', '<span style="position: relative; top: -0.5em;">,</span>')
+
 def main():
     st.title("AffilAdder: Author Affiliation Linker")
 
@@ -65,8 +69,9 @@ def main():
         combined_text = authors_text + '\n\n' + '\n'.join(affiliation_strings)
         
         # Display and provide download link
-        st.text_area("Processed Author Affiliations", combined_text, height=400)
-        st.markdown(download_link(combined_text, 'author_affiliations.txt', 'Click here to download the text file'), unsafe_allow_html=True)
+        combined_html = superscript_comma(combined_text)
+        st.markdown(combined_html, unsafe_allow_html=True)
+        st.markdown(download_link(combined_text.replace('+', ','), 'author_affiliations.txt', 'Click here to download the text file'), unsafe_allow_html=True)
 
 if __name__ == "__main__":
     main()
