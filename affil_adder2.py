@@ -51,12 +51,12 @@ def main():
     st.text("The input excel table should have 4 columns: Author, Affiliation1, Affiliation2, Affiliation3. "
             "Please make sure to not include space in the column names.")
     
-    option = st.radio("Choose an option", ["Upload my Excel file", "Use dummy Star Wars data"])
+    option = st.radio("Choose an option", ["Upload my Excel file", "Use Example data"])
     
     if option == "Upload my Excel file":
         uploaded_file = st.file_uploader("Upload your Excel file", type=['xlsx'])
     else:
-        st.write("Using the dummy Star Wars data...")
+        st.write("Using the example data...")
         uploaded_file = get_dummy_data()
 
     if uploaded_file is not None:
