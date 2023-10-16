@@ -1,0 +1,3 @@
+# Import necessary libraries
+streamlit
+pandas
