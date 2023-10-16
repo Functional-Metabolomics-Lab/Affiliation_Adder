@@ -3,6 +3,7 @@ import streamlit as st
 import pandas as pd
 from io import StringIO
 import base64
+import requests
 
 # Superscript mapping for numbers
 SUPERSCRIPT_MAP = {
@@ -31,14 +32,32 @@ def download_link(content, filename, text):
     b64 = base64.b64encode(buffer.read().encode()).decode()
     return f'<a href="data:application/octet-stream;base64,{b64}" download="{filename}">{text}</a>'
 
+# Function to add superscript comma
 def superscript_comma(content):
     """Convert normal commas to pseudo-superscript using CSS."""
     return content.replace('+', '<span style="position: relative; top: -0.5em;">,</span>')
 
+# Function to download the dummy data from GitHub
+def get_dummy_data():
+    url = "https://github.com/abzer005/Affiliation_Adder/raw/main/Dummy_table_Affiliations.xlsx"
+    response = requests.get(url)
+    with open("dummy_data.xlsx", "wb") as file:
+        file.write(response.content)
+    return "dummy_data.xlsx"
+
 def main():
     st.title("AffilAdder: Author Affiliation Linker")
 
-    uploaded_file = st.file_uploader("Upload your Excel file", type=['xlsx'])
+    st.text("The input excel table should have 4 columns: Author, Affiliation1, Affiliation2, Affiliation3. "
+            "Please make sure to not include space in the column names.")
+    
+    option = st.radio("Choose an option", ["Upload my Excel file", "Use dummy Star Wars data"])
+    
+    if option == "Upload my Excel file":
+        uploaded_file = st.file_uploader("Upload your Excel file", type=['xlsx'])
+    else:
+        st.write("Using the dummy Star Wars data...")
+        uploaded_file = get_dummy_data()
 
     if uploaded_file is not None:
         # Read the Excel file
