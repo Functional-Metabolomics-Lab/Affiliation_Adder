@@ -16,7 +16,7 @@ SUPERSCRIPT_MAP = {
     '7': '⁷',
     '8': '⁸',
     '9': '⁹',
-    ',': '⁺'
+    ',': '+'
 }
 
 def to_superscript(number_or_comma):
