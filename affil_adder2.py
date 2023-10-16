@@ -63,6 +63,10 @@ def main():
         # Read the Excel file
         df = pd.read_excel(uploaded_file)
 
+        # Display the first 10 rows of the data to the user
+        st.subheader("Preview of the Uploaded Data (first 10 rows)")
+        st.dataframe(df.head(10))
+
         # Collect unique affiliations in order
         affiliations = []
         for _, row in df.iterrows():
