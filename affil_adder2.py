@@ -15,7 +15,8 @@ SUPERSCRIPT_MAP = {
     '6': '⁶',
     '7': '⁷',
     '8': '⁸',
-    '9': '⁹'
+    '9': '⁹',
+    ',': '⁺'
 }
 
 def to_superscript(number):
