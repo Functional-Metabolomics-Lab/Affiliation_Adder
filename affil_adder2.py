@@ -19,9 +19,9 @@ SUPERSCRIPT_MAP = {
     ',': '⁺'
 }
 
-def to_superscript(number):
-    """Convert a number to its superscript representation."""
-    return ''.join([SUPERSCRIPT_MAP[digit] for digit in str(number)])
+def to_superscript(number_or_comma):
+    """Convert a number or comma to its superscript representation."""
+    return ''.join([SUPERSCRIPT_MAP[digit] for digit in str(number_or_comma)])
 
 # Function to download the results as a txt file
 def download_link(content, filename, text):
@@ -51,7 +51,7 @@ def main():
         author_strings = []
         for _, row in df.iterrows():
             affil_indices = [affiliations.index(row[column]) + 1 for column in ["Affiliation1", "Affiliation2", "Affiliation3"] if pd.notna(row[column])]
-            affiliation_string = ','.join([to_superscript(i) for i in affil_indices])
+            affiliation_string = to_superscript(','.join([str(i) for i in affil_indices]))
             author_string = f"{row['Author']}{affiliation_string}"
             author_strings.append(author_string)
             
